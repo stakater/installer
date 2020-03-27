@@ -11,7 +11,6 @@ data "openstack_networking_network_v2" "external_network" {
 resource "openstack_networking_network_v2" "openshift-private" {
   name           = "${var.cluster_id}-openshift"
   admin_state_up = "true"
-  tags           = ["openshiftClusterID=${var.cluster_id}"]
 }
 
 resource "openstack_networking_subnet_v2" "nodes" {
@@ -19,7 +18,6 @@ resource "openstack_networking_subnet_v2" "nodes" {
   cidr            = local.nodes_cidr_block
   ip_version      = 4
   network_id      = openstack_networking_network_v2.openshift-private.id
-  tags            = ["openshiftClusterID=${var.cluster_id}"]
   dns_nameservers = var.external_dns
 
   # We reserve some space at the beginning of the CIDR to use for the VIPs
@@ -40,7 +38,6 @@ resource "openstack_networking_port_v2" "masters" {
   admin_state_up     = "true"
   network_id         = openstack_networking_network_v2.openshift-private.id
   security_group_ids = [openstack_networking_secgroup_v2.master.id]
-  tags               = ["openshiftClusterID=${var.cluster_id}"]
 
   extra_dhcp_option {
     name  = "domain-search"
@@ -70,7 +67,6 @@ resource "openstack_networking_port_v2" "api_port" {
   admin_state_up     = "true"
   network_id         = openstack_networking_network_v2.openshift-private.id
   security_group_ids = [openstack_networking_secgroup_v2.master.id]
-  tags               = ["openshiftClusterID=${var.cluster_id}"]
 
   fixed_ip {
     subnet_id = openstack_networking_subnet_v2.nodes.id
@@ -85,7 +81,6 @@ resource "openstack_networking_port_v2" "ingress_port" {
   admin_state_up     = "true"
   network_id         = openstack_networking_network_v2.openshift-private.id
   security_group_ids = [openstack_networking_secgroup_v2.worker.id]
-  tags               = ["openshiftClusterID=${var.cluster_id}"]
 
   fixed_ip {
     subnet_id = openstack_networking_subnet_v2.nodes.id
@@ -97,7 +92,6 @@ resource "openstack_networking_port_v2" "ingress_port" {
 resource "openstack_networking_trunk_v2" "masters" {
   name  = "${var.cluster_id}-master-trunk-${count.index}"
   count = var.trunk_support ? var.masters_count : 0
-  tags  = ["openshiftClusterID=${var.cluster_id}"]
 
   admin_state_up = "true"
   port_id        = openstack_networking_port_v2.masters[count.index].id
@@ -129,7 +123,6 @@ resource "openstack_networking_router_v2" "openshift-external-router" {
   name                = "${var.cluster_id}-external-router"
   admin_state_up      = true
   external_network_id = data.openstack_networking_network_v2.external_network.id
-  tags                = ["openshiftClusterID=${var.cluster_id}"]
 }
 
 resource "openstack_networking_router_interface_v2" "nodes_router_interface" {

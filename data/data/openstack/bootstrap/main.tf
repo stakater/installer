@@ -4,7 +4,6 @@ resource "openstack_networking_port_v2" "bootstrap_port" {
   admin_state_up     = "true"
   network_id         = var.private_network_id
   security_group_ids = [var.master_sg_id]
-  tags               = ["openshiftClusterID=${var.cluster_id}"]
 
   extra_dhcp_option {
     name  = "domain-search"
@@ -50,7 +49,6 @@ resource "openstack_networking_floatingip_v2" "bootstrap_fip" {
   description = "${var.cluster_id}-bootstrap-fip"
   pool        = var.external_network
   port_id     = openstack_networking_port_v2.bootstrap_port.id
-  tags        = ["openshiftClusterID=${var.cluster_id}"]
 
   depends_on = ["openstack_compute_instance_v2.bootstrap"]
 }

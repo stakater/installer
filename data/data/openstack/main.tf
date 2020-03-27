@@ -83,8 +83,6 @@ resource "openstack_images_image_v2" "base_image" {
   local_file_path  = var.openstack_base_image_local_file_path
   container_format = "bare"
   disk_format      = "qcow2"
-
-  tags = ["openshiftClusterID=${var.cluster_id}"]
 }
 
 data "openstack_images_image_v2" "base_image" {

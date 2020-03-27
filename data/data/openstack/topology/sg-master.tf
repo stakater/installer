@@ -1,6 +1,5 @@
 resource "openstack_networking_secgroup_v2" "master" {
   name = "${var.cluster_id}-master"
-  tags = ["openshiftClusterID=${var.cluster_id}"]
 }
 
 // We can't create all security group rules at once because it may lead to
