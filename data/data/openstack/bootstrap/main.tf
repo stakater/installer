@@ -46,7 +46,6 @@ resource "openstack_compute_instance_v2" "bootstrap" {
 }
 
 resource "openstack_networking_floatingip_v2" "bootstrap_fip" {
-  description = "${var.cluster_id}-bootstrap-fip"
   pool        = var.external_network
   port_id     = openstack_networking_port_v2.bootstrap_port.id
 
