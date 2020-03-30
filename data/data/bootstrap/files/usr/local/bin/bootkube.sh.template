@@ -294,8 +294,7 @@ then
 			--haproxy-image="${HAPROXY_IMAGE}" \
 			--baremetal-runtimecfg-image="${BAREMETAL_RUNTIMECFG_IMAGE}" \
 			--cloud-config-file=/assets/manifests/cloud-provider-config.yaml \
-			--cluster-etcd-operator-image="${CLUSTER_ETCD_OPERATOR_IMAGE}" \
-			${ADDITIONAL_FLAGS}
+			--cluster-etcd-operator-image="${CLUSTER_ETCD_OPERATOR_IMAGE}"
 
 	# Bootstrap MachineConfigController uses /etc/mcc/bootstrap/manifests/ dir to
 	# 1. read the controller config rendered by MachineConfigOperator
