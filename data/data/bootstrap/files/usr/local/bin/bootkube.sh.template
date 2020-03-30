@@ -267,9 +267,9 @@ then
 	rm --recursive --force mco-bootstrap
 
 	ADDITIONAL_FLAGS=""
-	if [ -f "/opt/openshift/tls/cloud-ca-cert.pem" ]; then
-		ADDITIONAL_FLAGS="--cloud-provider-ca-file=/assets/tls/cloud-ca-cert.pem"
-	fi
+#	if [ -f "/opt/openshift/tls/cloud-ca-cert.pem" ]; then
+#		ADDITIONAL_FLAGS="--cloud-provider-ca-file=/assets/tls/cloud-ca-cert.pem"
+#	fi
 
 	bootkube_podman_run \
 		--user 0 \
