@@ -1,6 +1,5 @@
 resource "openstack_networking_secgroup_v2" "master" {
   name = "${var.cluster_id}-master"
-  tags = ["openshiftClusterID=${var.cluster_id}"]
 }
 
 // We can't create all security group rules at once because it may lead to
@@ -355,7 +354,7 @@ resource "openstack_networking_secgroup_rule_v2" "master_ingress_services_udp_fr
 resource "openstack_networking_secgroup_rule_v2" "master_ingress_vrrp" {
   direction         = "ingress"
   ethertype         = "IPv4"
-  protocol          = "vrrp"
+  protocol          = "112"
   remote_ip_prefix  = var.cidr_block
   security_group_id = openstack_networking_secgroup_v2.master.id
 

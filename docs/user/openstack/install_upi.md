@@ -12,6 +12,9 @@ This provides a greater flexibility at the cost of a more explicit and interacti
 
 Below is a step-by-step guide to a UPI installation that mimics an automated IPI installation; prerequisites and steps described below should be adapted to the constraints of the target infrastructure.
 
+Please be aware of the [Known Issues](known-issues.md#known-issues-specific-to-user-provisioned-installations)
+of this method of installation.
+
 ## Table of Contents
 
 * [Prerequisites](#prerequisites)
@@ -349,7 +352,9 @@ Remove the control-plane Machines and compute MachineSets, because we'll be prov
 ```sh
 $ rm -f openshift/99_openshift-cluster-api_master-machines-*.yaml openshift/99_openshift-cluster-api_worker-machineset-*.yaml
 ```
-You are free to leave the compute MachineSets in if you want to create compute machines via the machine API, but if you do you may need to update the various references (`subnet`, etc.) to match your environment.
+Leave the compute MachineSets in if you want to create compute machines via the machine API. However, some references must be updated in the machineset spec (`openshift/99_openshift-cluster-api_worker-machineset-0.yaml`) to match your environment:
+
+* The OS image: `spec.template.spec.providerSpec.value.image`
 
 [mao]: https://github.com/openshift/machine-api-operator
 

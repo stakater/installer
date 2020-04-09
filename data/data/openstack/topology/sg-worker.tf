@@ -1,6 +1,5 @@
 resource "openstack_networking_secgroup_v2" "worker" {
   name = "${var.cluster_id}-worker"
-  tags = ["openshiftClusterID=${var.cluster_id}"]
 }
 
 # TODO(mandre) Explicitely enable egress
@@ -260,7 +259,7 @@ resource "openstack_networking_secgroup_rule_v2" "worker_ingress_services_udp_fr
 resource "openstack_networking_secgroup_rule_v2" "worker_ingress_vrrp" {
   direction         = "ingress"
   ethertype         = "IPv4"
-  protocol          = "vrrp"
+  protocol          = "112"
   remote_ip_prefix  = var.cidr_block
   security_group_id = openstack_networking_secgroup_v2.worker.id
 
